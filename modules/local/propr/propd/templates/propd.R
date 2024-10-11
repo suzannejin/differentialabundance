@@ -120,6 +120,7 @@ opt <- list(
     samplesheet       = '$samplesheet',
     obs_id_col        = 'sample',             # column name of observation ids
     group_col         = 'treatment',          # column name of grouping variable
+    group_values      = NA,                   # a comma separated string with the values of the group_col to be used for comparison. If NA, all values are used
 
     # parameters for computing differential proportionality
     alpha             = NA,                   # alpha for boxcox transformation
@@ -142,6 +143,7 @@ opt_types <- list(
     features_id_col   = 'character',
     obs_id_col        = 'character',
     group_col         = 'character',
+    group_values      = 'character',
     alpha             = 'numeric',
     moderated         = 'logical',
     fdr               = 'numeric',
@@ -239,6 +241,14 @@ tmp <- samplesheet[[opt\$group_col]]
 names(tmp) <- samplesheet[[opt\$obs_id_col]]
 group <- as.vector(tmp[rownames(mat)])
 if (length(group) != nrow(mat)) stop('Error when parsing group')
+
+# filter group values, if provided
+
+if (!is.na(opt\$group_values)) {
+    group_values <- unlist(strsplit(opt\$group_values, ','))
+    group <- group[group %in% group_values]
+    mat <- mat[group %in% group_values,]
+}
 
 # compute differential proportionality
 
