@@ -34,11 +34,9 @@ workflow DIFFERENTIAL {
 
     ch_counts
         .combine(ch_tools_single.propd)
-        .combine(ch_contrasts)
         .map {
-            meta_counts, counts, tools, meta_contrast, contrast_variable, reference, target ->
+            meta_counts, counts, tools ->
                 def meta = meta_counts.clone() + tools.clone()
-                meta.args_diff = (meta.args_diff ?: "") + " --group_col $contrast_variable"  // TODO parse the toolsheet with the ext.arg from modules.config at the beginning of the experimental workflow
                 [ meta, counts ]
         }
         .unique()

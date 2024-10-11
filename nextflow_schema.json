@@ -61,8 +61,8 @@
                 }
             }
         },
-        "experimental_analysis_options": {
-            "title": "Experimental analysis, including CoDa",
+        "run_experimental_branch_through_the_toolsheet_config": {
+            "title": "Run experimental branch through the toolsheet config",
             "type": "object",
             "fa_icon": "fas fa-terminal",
             "description": "Values required for experimental analysis",
@@ -75,11 +75,11 @@
                     "schema": "assets/schema_tools.json",
                     "pattern": "^\\S+\\.(csv|tsv|yaml)$",
                     "description": "Path to comma-separated file containing samplesheet",
-                    "help_text": "This file defines possible combinations of tools, which are to be run by the pipeline"
+                    "help_text": "This file defines possible combinations of tools, which are to be run by the pipeline",
+                    "default": "${projectDir}/assets/tools_samplesheet.csv"
                 },
                 "pathway": {
                     "type": "string",
-                    "default": "diff_prop",
                     "fa_icon": "fas fa-border-all",
                     "description": "(experimantal only): Choose a (list of) pathway from those predefined in the tool sheet",
                     "help_text": "Choose the a subset of pathways to run. Pathways are defined in the tool sheet."
@@ -109,14 +109,12 @@
                 },
                 "affy_cel_files_archive": {
                     "type": "string",
-                    "default": "null",
                     "description": "Alternative to matrix: a compressed CEL files archive such as often found in GEO",
                     "fa_icon": "fas fa-file-archive",
                     "help_text": "Use this option to provide a raw archive of CEL files from Affymetrix arrays. Will be ignored if a matrix is specified."
                 },
                 "querygse": {
                     "type": "string",
-                    "default": "null",
                     "description": "Use SOFT files from GEO by providing the GSE study identifier",
                     "fa_icon": "fas fa-keyboard",
                     "help_text": "Use this option to provide a GSE study identifier."
@@ -752,6 +750,92 @@
             },
             "fa_icon": "fas fa-border-all"
         },
+        "propd_specific_options": {
+            "title": "propd specific options",
+            "type": "object",
+            "description": "Parameters to run differential proportionality",
+            "default": "",
+            "properties": {
+                "propd_group_col": {
+                    "type": "string",
+                    "default": "null"
+                },
+                "propd_group_values": {
+                    "type": "string",
+                    "default": "null"
+                },
+                "propd_alpha": {
+                    "type": "string",
+                    "default": "null",
+                    "description": "Alpha parameter for Box-Cox transformation. Default is skipped, and log transformation is used."
+                },
+                "propd_moderated": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Use moderated version of differential proportionality coefficients. This is usually needed when p>>n."
+                },
+                "propd_fdr": {
+                    "type": "number",
+                    "default": 0.05,
+                    "description": "FDR threshold for filtering the significant pairs."
+                },
+                "propd_permutation": {
+                    "type": "integer",
+                    "default": 0,
+                    "description": "When this parameter is 0, use the default statistical test to determine the FDR. When this number is > 0, run permutation test to get the FDR with as many permutations as defined by this parameter.  Usually a minimum number of 100 permutations is needed."
+                },
+                "propd_ncutoffs": {
+                    "type": "integer",
+                    "default": 100,
+                    "description": "Because it is expensive to calculate an associated p-value for all the pairs through all the permutation tests, this number is used to define on how many values to calculate the FDR. The higher this value is, the higher the granularity."
+                }
+            }
+        },
+        "propr_specific_options": {
+            "title": "propr specific options",
+            "type": "object",
+            "description": "Parameters to run correlation analysis through propr package",
+            "default": "",
+            "properties": {
+                "propr_metric": {
+                    "type": "string",
+                    "default": "rho",
+                    "description": "The correlation metric to use.",
+                    "enum": ["rho", "cor", "pcor", "pcor.shrink", "pcor.bshrink", "vlr", "phi", "phs"]
+                },
+                "propr_ivar": {
+                    "type": "string",
+                    "default": "clr",
+                    "description": "Which logratio transformation to use. 'clr' means centered logratio transformation, which uses the sample geometric mean as reference. 'alr' means additive logratio transformation, and it can use any gene or genes as reference(s). One can give the gene name(s) or index(es) as reference(s)."
+                },
+                "propr_alpha": {
+                    "type": "string",
+                    "default": "null",
+                    "description": "Alpha parameter for Box-Cox transformation. Default is skipped, and log transformation is used."
+                },
+                "propr_fdr": {
+                    "type": "number",
+                    "default": 0.05,
+                    "description": "FDR threshold for filtering the significant pairs."
+                },
+                "propr_permutation": {
+                    "type": "integer",
+                    "default": 100,
+                    "description": "Number of permutations for the permutation test that is used to compute the FDR of observing a given correlation coefficient value by chance."
+                },
+                "propr_ncutoffs": {
+                    "type": "integer",
+                    "default": 100,
+                    "description": "Because it is expensive to calculate an associated p-value for all the pairs through all the permutation tests, this number is used to define on how many values to calculate the FDR. The higher this value is, the higher the granularity."
+                },
+                "propr_tails": {
+                    "type": "string",
+                    "default": "right",
+                    "enum": ["right", "both"],
+                    "description": "Use one-sided 'right'-tailed test or 'both' for two-sided test with symmetric cutpoints."
+                }
+            }
+        },
         "gsea": {
             "title": "GSEA",
             "type": "object",
@@ -912,7 +996,6 @@
                 },
                 "gprofiler2_measure_underrepresentation": {
                     "type": "boolean",
-                    "default": false,
                     "description": "Should underrepresentation be measured instead of overrepresentation?",
                     "help_text": "Default false; if true, will measure overrepresentation."
                 },
@@ -929,7 +1012,6 @@
                 },
                 "gprofiler2_evcodes": {
                     "type": "boolean",
-                    "default": false,
                     "description": "Whether to include evcodes in the results.",
                     "help_text": "This can decrease performance and make the query slower. See https://rdrr.io/cran/gprofiler2/man/gost.html"
                 },
@@ -974,6 +1056,29 @@
                 }
             },
             "fa_icon": "fas fa-layer-group"
+        },
+        "grea_specific_options": {
+            "title": "GREA specific options",
+            "type": "object",
+            "description": "Parameters to run GREA (Gene Ratio Enrichment Analysis)",
+            "default": "",
+            "properties": {
+                "grea_set_min": {
+                    "type": "integer",
+                    "default": 15,
+                    "description": "Min size: exclude smaller sets"
+                },
+                "grea_set_max": {
+                    "type": "integer",
+                    "default": 500,
+                    "description": "Max size: exclude larger sets"
+                },
+                "grea_permutation": {
+                    "type": "integer",
+                    "default": 100,
+                    "description": "Number of permutations for the permutation test that is used to compute the FDR of observing a given odds ratio by chance."
+                }
+            }
         },
         "shiny_app_settings": {
             "title": "Shiny app settings",
@@ -1308,7 +1413,7 @@
             "$ref": "#/definitions/input_output_options"
         },
         {
-            "$ref": "#/definitions/experimental_analysis_options"
+            "$ref": "#/definitions/run_experimental_branch_through_the_toolsheet_config"
         },
         {
             "$ref": "#/definitions/abundance_values"
@@ -1341,10 +1446,19 @@
             "$ref": "#/definitions/limma_specific_options_microarray_only"
         },
         {
+            "$ref": "#/definitions/propd_specific_options"
+        },
+        {
+            "$ref": "#/definitions/propr_specific_options"
+        },
+        {
             "$ref": "#/definitions/gsea"
         },
         {
             "$ref": "#/definitions/gprofiler2"
+        },
+        {
+            "$ref": "#/definitions/grea_specific_options"
         },
         {
             "$ref": "#/definitions/shiny_app_settings"
