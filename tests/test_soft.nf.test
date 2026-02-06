@@ -7,12 +7,11 @@ nextflow_pipeline {
 
 
     test("Test soft profile - limma_soft") {
+        config "${projectDir}/conf/limma_soft.config"
 
         when {
             params {
                 outdir        = "$outputDir"
-                paramsheet    = "${projectDir}/conf/test_paramsheet.yaml"
-                paramset_name = "limma_soft"
             }
         }
 

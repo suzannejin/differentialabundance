@@ -6,12 +6,11 @@ nextflow_pipeline {
     tag "pipeline"
 
     test("Test rnaseq limma profile - limma_rnaseq_gsea") {
+        config "${projectDir}/conf/limma_rnaseq_gsea.config"
 
         when {
             params {
                 outdir        = "$outputDir"
-                paramsheet    = "${projectDir}/conf/test_paramsheet.yaml"
-                paramset_name = "limma_rnaseq_gsea"
             }
         }
 
@@ -37,12 +36,12 @@ nextflow_pipeline {
     }
 
     test("Test rnaseq limma profile - limma_rnaseq_gsea,limma_rnaseq_gprofiler2") {
+        config "${projectDir}/conf/limma_rnaseq_gsea.config"
+        config "${projectDir}/conf/limma_rnaseq_gprofiler2.config"
 
         when {
             params {
                 outdir        = "$outputDir"
-                paramsheet    = "${projectDir}/conf/test_paramsheet.yaml"
-                paramset_name = "limma_rnaseq_gsea,limma_rnaseq_gprofiler2"
             }
         }
 
@@ -101,12 +100,11 @@ nextflow_pipeline {
 
     test("Test rnaseq limma profile - with decoupler") {
         tag "limma_rnaseq_decoupler"
+        config "${projectDir}/conf/limma_rnaseq_decoupler.config"
 
         when {
             params {
                 outdir        = "$outputDir"
-                paramsheet    = "${projectDir}/conf/test_paramsheet.yaml"
-                paramset_name = "limma_rnaseq_decoupler"
             }
         }
 

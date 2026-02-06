@@ -6,13 +6,11 @@ nextflow_pipeline {
     tag "pipeline"
 
     test("Test affy profile - limma_affy_gsea") {
-
+        config "${projectDir}/conf/limma_affy_gsea.config"
 
         when {
             params {
                 outdir              = "$outputDir"
-                paramsheet          = "${projectDir}/conf/test_paramsheet.yaml"
-                paramset_name       = "limma_affy_gsea"
             }
         }
 
@@ -40,12 +38,12 @@ nextflow_pipeline {
     }
 
     test("Test affy profile - limma_affy_gsea,limma_affy_gprofiler2") {
+        config "${projectDir}/conf/limma_affy_gsea.config"
+        config "${projectDir}/conf/limma_affy_gprofiler2.config"
 
         when {
             params {
                 outdir              = "$outputDir"
-                paramsheet          = "${projectDir}/conf/test_paramsheet.yaml"
-                paramset_name       = "limma_affy_gsea,limma_affy_gprofiler2"
             }
         }
 

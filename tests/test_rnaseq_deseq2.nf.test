@@ -6,12 +6,11 @@ nextflow_pipeline {
     tag "pipeline"
 
     test("Test profile - deseq2_rnaseq_gsea") {
+        config "${projectDir}/conf/deseq2_rnaseq_gsea.config"
 
         when {
             params {
                 outdir        = "$outputDir"
-                paramsheet    = "${projectDir}/conf/test_paramsheet.yaml"
-                paramset_name = "deseq2_rnaseq_gsea"
             }
         }
 
@@ -37,12 +36,12 @@ nextflow_pipeline {
     }
 
     test("Test profile - deseq2_rnaseq_gsea,deseq2_rnaseq_gprofiler2") {
+        config "${projectDir}/conf/deseq2_rnaseq_gsea.config"
+        config "${projectDir}/conf/deseq2_rnaseq_gprofiler2.config"
 
         when {
             params {
                 outdir        = "$outputDir"
-                paramsheet    = "${projectDir}/conf/test_paramsheet.yaml"
-                paramset_name = "deseq2_rnaseq_gsea,deseq2_rnaseq_gprofiler2"
             }
         }
 

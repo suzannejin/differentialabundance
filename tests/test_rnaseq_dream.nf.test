@@ -6,12 +6,11 @@ nextflow_pipeline {
     tag "pipeline"
 
     test("Test rnaseq dream profile - dream_rnaseq") {
+        config "${projectDir}/conf/dream_rnaseq.config"
 
         when {
             params {
                 outdir              = "$outputDir"
-                paramsheet          = "${projectDir}/conf/test_paramsheet.yaml"
-                paramset_name       = "dream_rnaseq"
             }
         }
 
@@ -37,11 +36,11 @@ nextflow_pipeline {
     }
 
     test("Test rnaseq dream profile - complex contrast - with zero intercept") {
+        config "${projectDir}/conf/dream_norm.config"
+
         when {
             params {
                 outdir              = "$outputDir"
-                paramsheet          = "${projectDir}/conf/test_paramsheet.yaml"
-                paramset_name       = "dream_norm"
             }
         }
 
@@ -67,12 +66,11 @@ nextflow_pipeline {
     }
 
     test("Test rnaseq dream profile - with decoupler") {
+        config "${projectDir}/conf/dream_rnaseq_decoupler.config"
 
         when {
             params {
                 outdir              = "$outputDir"
-                paramsheet          = "${projectDir}/conf/test_paramsheet.yaml"
-                paramset_name       = "dream_rnaseq_decoupler"
             }
         }
 
