@@ -6,11 +6,11 @@ nextflow_pipeline {
     tag "pipeline"
 
     test("Test rnaseq dream profile - dream_rnaseq") {
-        config "${projectDir}/conf/dream_rnaseq.config"
+        config "${projectDir}/conf/test/rnaseq_dream.config"
 
         when {
             params {
-                outdir              = "$outputDir"
+                outdir = "$outputDir"
             }
         }
 
@@ -31,16 +31,16 @@ nextflow_pipeline {
                     // All files with stable contents
                     stable_path
                 ).match() }
-                )
+            )
         }
     }
 
     test("Test rnaseq dream profile - complex contrast - with zero intercept") {
-        config "${projectDir}/conf/dream_norm.config"
-
         when {
             params {
-                outdir              = "$outputDir"
+                outdir        = "$outputDir"
+                paramsheet    = "${projectDir}/conf/test_paramsheet.yaml"
+                paramset_name = "dream_norm"
             }
         }
 
@@ -61,16 +61,16 @@ nextflow_pipeline {
                     // All files with stable contents
                     stable_path
                 ).match() }
-                )
+            )
         }
     }
 
     test("Test rnaseq dream profile - with decoupler") {
-        config "${projectDir}/conf/dream_rnaseq_decoupler.config"
-
         when {
             params {
-                outdir              = "$outputDir"
+                outdir        = "$outputDir"
+                paramsheet    = "${projectDir}/conf/test_paramsheet.yaml"
+                paramset_name = "dream_rnaseq_decoupler"
             }
         }
 
@@ -91,16 +91,16 @@ nextflow_pipeline {
                     // All files with stable contents
                     stable_path
                 ).match() }
-                )
+            )
         }
     }
 
     test("Test - Numeric sample IDs - rnaseq dream profile - with decoupler") {
         when {
             params {
-                outdir              = "$outputDir"
-                paramsheet          = "${projectDir}/conf/test_paramsheet.yaml"
-                paramset_name       = "dream_rnaseq_decoupler_numeric_samples"
+                outdir        = "$outputDir"
+                paramsheet    = "${projectDir}/conf/test_paramsheet.yaml"
+                paramset_name = "dream_rnaseq_decoupler_numeric_samples"
             }
         }
 
@@ -121,7 +121,7 @@ nextflow_pipeline {
                     // All files with stable contents
                     stable_path
                 ).match() }
-                )
+            )
         }
     }
 }

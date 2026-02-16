@@ -6,11 +6,11 @@ nextflow_pipeline {
     tag "pipeline"
 
     test("Test rnaseq limma profile - limma_rnaseq_gsea") {
-        config "${projectDir}/conf/limma_rnaseq_gsea.config"
+        config "${projectDir}/conf/test/rnaseq_limma_gsea.config"
 
         when {
             params {
-                outdir        = "$outputDir"
+                outdir = "$outputDir"
             }
         }
 
@@ -31,17 +31,16 @@ nextflow_pipeline {
                     // All files with stable contents
                     stable_path
                 ).match() }
-                )
+            )
         }
     }
 
-    test("Test rnaseq limma profile - limma_rnaseq_gsea,limma_rnaseq_gprofiler2") {
-        config "${projectDir}/conf/limma_rnaseq_gsea.config"
-        config "${projectDir}/conf/limma_rnaseq_gprofiler2.config"
+    test("Test rnaseq limma profile - limma_rnaseq_gprofiler2") {
+        config "${projectDir}/conf/test/rnaseq_limma_gprofiler2.config"
 
         when {
             params {
-                outdir        = "$outputDir"
+                outdir = "$outputDir"
             }
         }
 
@@ -62,7 +61,7 @@ nextflow_pipeline {
                     // All files with stable contents
                     stable_path
                 ).match() }
-                )
+            )
         }
     }
 
@@ -94,17 +93,17 @@ nextflow_pipeline {
                     // All files with stable contents
                     stable_path
                 ).match() }
-                )
+            )
         }
     }
 
     test("Test rnaseq limma profile - with decoupler") {
         tag "limma_rnaseq_decoupler"
-        config "${projectDir}/conf/limma_rnaseq_decoupler.config"
+        config "${projectDir}/conf/test/rnaseq_limma_decoupler.config"
 
         when {
             params {
-                outdir        = "$outputDir"
+                outdir = "$outputDir"
             }
         }
 
@@ -125,7 +124,7 @@ nextflow_pipeline {
                     // All files with stable contents
                     stable_path
                 ).match() }
-                )
+            )
         }
     }
 
@@ -155,7 +154,7 @@ nextflow_pipeline {
                     // All files with stable contents
                     stable_path
                 ).match() }
-                )
+            )
         }
     }
 }
