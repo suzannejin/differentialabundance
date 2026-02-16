@@ -5,15 +5,13 @@ nextflow_pipeline {
     tag "maxquant"
     tag "pipeline"
 
-
     test("Test maxquant profile - limma_maxquant") {
-        config "${projectDir}/conf/limma_maxquant.config"
+        config "${projectDir}/conf/test/maxquant_limma.config"
 
         when {
             params {
-                outdir              = "$outputDir"
+                outdir = "$outputDir"
             }
-
         }
 
         then {
@@ -33,7 +31,7 @@ nextflow_pipeline {
                     // All files with stable contents
                     stable_path
                 ).match() }
-                )
+            )
         }
     }
 }
