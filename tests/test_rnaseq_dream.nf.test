@@ -6,7 +6,7 @@ nextflow_pipeline {
     tag "pipeline"
 
     test("Test rnaseq dream profile - dream_rnaseq") {
-        config "${projectDir}/conf/test/rnaseq_dream.config"
+        config "${projectDir}/conf/rnaseq_dream.config"
 
         when {
             params {

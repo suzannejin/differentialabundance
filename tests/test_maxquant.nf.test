@@ -6,7 +6,7 @@ nextflow_pipeline {
     tag "pipeline"
 
     test("Test maxquant profile - limma_maxquant") {
-        config "${projectDir}/conf/test/maxquant_limma.config"
+        config "${projectDir}/conf/maxquant_limma.config"
 
         when {
             params {

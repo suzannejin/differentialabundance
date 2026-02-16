@@ -6,7 +6,7 @@ nextflow_pipeline {
     tag "pipeline"
 
     test("Test profile - deseq2_rnaseq_gsea") {
-        config "${projectDir}/conf/test/rnaseq_deseq2_gsea.config"
+        config "${projectDir}/conf/rnaseq_deseq2_gsea.config"
 
         when {
             params {
@@ -36,7 +36,7 @@ nextflow_pipeline {
     }
 
     test("Test profile - deseq2_rnaseq_gprofiler2") {
-        config "${projectDir}/conf/test/rnaseq_deseq2_gprofiler2.config"
+        config "${projectDir}/conf/rnaseq_deseq2_gprofiler2.config"
 
         when {
             params {

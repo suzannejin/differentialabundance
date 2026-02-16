@@ -6,7 +6,7 @@ nextflow_pipeline {
     tag "pipeline"
 
     test("Test affy profile - limma_affy_gsea") {
-        config "${projectDir}/conf/test/affy_limma_gsea.config"
+        config "${projectDir}/conf/affy_limma_gsea.config"
 
         when {
             params {
@@ -38,7 +38,7 @@ nextflow_pipeline {
     }
 
     test("Test affy profile - limma_affy_gprofiler2") {
-        config "${projectDir}/conf/test/affy_limma_gprofiler2.config"
+        config "${projectDir}/conf/affy_limma_gprofiler2.config"
 
         when {
             params {

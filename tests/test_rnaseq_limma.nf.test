@@ -6,7 +6,7 @@ nextflow_pipeline {
     tag "pipeline"
 
     test("Test rnaseq limma profile - limma_rnaseq_gsea") {
-        config "${projectDir}/conf/test/rnaseq_limma_gsea.config"
+        config "${projectDir}/conf/rnaseq_limma_gsea.config"
 
         when {
             params {
@@ -36,7 +36,7 @@ nextflow_pipeline {
     }
 
     test("Test rnaseq limma profile - limma_rnaseq_gprofiler2") {
-        config "${projectDir}/conf/test/rnaseq_limma_gprofiler2.config"
+        config "${projectDir}/conf/rnaseq_limma_gprofiler2.config"
 
         when {
             params {
@@ -99,7 +99,7 @@ nextflow_pipeline {
 
     test("Test rnaseq limma profile - with decoupler") {
         tag "limma_rnaseq_decoupler"
-        config "${projectDir}/conf/test/rnaseq_limma_decoupler.config"
+        config "${projectDir}/conf/rnaseq_limma_decoupler.config"
 
         when {
             params {
