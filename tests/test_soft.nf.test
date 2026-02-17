@@ -5,14 +5,12 @@ nextflow_pipeline {
     tag "soft"
     tag "pipeline"
 
-
     test("Test soft profile - limma_soft") {
+        config "${projectDir}/conf/soft_limma.config"
 
         when {
             params {
-                outdir        = "$outputDir"
-                paramsheet    = "${projectDir}/conf/test_paramsheet.yaml"
-                paramset_name = "limma_soft"
+                outdir = "$outputDir"
             }
         }
 
@@ -33,7 +31,7 @@ nextflow_pipeline {
                     // All files with stable contents
                     stable_path
                 ).match() }
-                )
+            )
         }
     }
 }

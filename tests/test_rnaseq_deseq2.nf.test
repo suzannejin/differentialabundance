@@ -1,17 +1,16 @@
 nextflow_pipeline {
 
-    name "Test Workflow main.nf - DIFFERENTIALABUNDANCE (test)"
+    name "Test Workflow main.nf - DIFFERENTIALABUNDANCE (DESeq2)"
     script "../main.nf"
     tag "test_rnaseq_deseq2"
     tag "pipeline"
 
     test("Test profile - deseq2_rnaseq_gsea") {
+        config "${projectDir}/conf/rnaseq_deseq2_gsea.config"
 
         when {
             params {
-                outdir        = "$outputDir"
-                paramsheet    = "${projectDir}/conf/test_paramsheet.yaml"
-                paramset_name = "deseq2_rnaseq_gsea"
+                outdir = "$outputDir"
             }
         }
 
@@ -32,17 +31,16 @@ nextflow_pipeline {
                     // All files with stable contents
                     stable_path
                 ).match() }
-                )
+            )
         }
     }
 
-    test("Test profile - deseq2_rnaseq_gsea,deseq2_rnaseq_gprofiler2") {
+    test("Test profile - deseq2_rnaseq_gprofiler2") {
+        config "${projectDir}/conf/rnaseq_deseq2_gprofiler2.config"
 
         when {
             params {
-                outdir        = "$outputDir"
-                paramsheet    = "${projectDir}/conf/test_paramsheet.yaml"
-                paramset_name = "deseq2_rnaseq_gsea,deseq2_rnaseq_gprofiler2"
+                outdir = "$outputDir"
             }
         }
 
@@ -63,7 +61,7 @@ nextflow_pipeline {
                     // All files with stable contents
                     stable_path
                 ).match() }
-                )
+            )
         }
     }
 
@@ -72,7 +70,7 @@ nextflow_pipeline {
             params {
                 outdir        = "$outputDir"
                 paramsheet    = "${projectDir}/conf/test_paramsheet.yaml"
-                paramset_name = "deseq2_rnaseq_gsea_numeric_samples,deseq2_rnaseq_gprofiler2_numeric_samples"
+                paramset_name = "deseq2_rnaseq_gsea_numeric_samples"
             }
         }
 
@@ -93,7 +91,7 @@ nextflow_pipeline {
                     // All files with stable contents
                     stable_path
                 ).match() }
-                )
+            )
         }
     }
 }

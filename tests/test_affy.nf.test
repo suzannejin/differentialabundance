@@ -6,13 +6,11 @@ nextflow_pipeline {
     tag "pipeline"
 
     test("Test affy profile - limma_affy_gsea") {
-
+        config "${projectDir}/conf/affy_limma_gsea.config"
 
         when {
             params {
-                outdir              = "$outputDir"
-                paramsheet          = "${projectDir}/conf/test_paramsheet.yaml"
-                paramset_name       = "limma_affy_gsea"
+                outdir = "$outputDir"
             }
         }
 
@@ -35,17 +33,16 @@ nextflow_pipeline {
                     // All files with stable contents
                     stable_path
                 ).match() }
-                )
+            )
         }
     }
 
-    test("Test affy profile - limma_affy_gsea,limma_affy_gprofiler2") {
+    test("Test affy profile - limma_affy_gprofiler2") {
+        config "${projectDir}/conf/affy_limma_gprofiler2.config"
 
         when {
             params {
-                outdir              = "$outputDir"
-                paramsheet          = "${projectDir}/conf/test_paramsheet.yaml"
-                paramset_name       = "limma_affy_gsea,limma_affy_gprofiler2"
+                outdir = "$outputDir"
             }
         }
 
@@ -68,7 +65,7 @@ nextflow_pipeline {
                     // All files with stable contents
                     stable_path
                 ).match() }
-                )
+            )
         }
     }
 }
