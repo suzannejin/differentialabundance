@@ -5,35 +5,32 @@ nextflow_pipeline {
     tag "soft"
     tag "pipeline"
 
-
-    test("Test soft profile - limma_soft") {
+    test("Test soft profile - soft") {
 
         when {
             params {
-                outdir        = "$outputDir"
-                paramsheet    = "${projectDir}/conf/test_paramsheet.yaml"
-                paramset_name = "limma_soft"
+                outdir                     = "$outputDir"
+
+                // Input data
+                input                      = 'https://raw.githubusercontent.com/nf-core/test-datasets/differentialabundance/testdata/GSE50790.csv'
+                contrasts_yml              = 'https://raw.githubusercontent.com/nf-core/test-datasets/refs/heads/differentialabundance/testdata/GSE50790_contrasts.yaml'
+                querygse                   = 'GSE50790'
             }
+            profile 'soft'
         }
 
         then {
-            // stable_name: All files + folders in ${params.outdir}/ with a stable name
             def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
-            // stable_path: All files in ${params.outdir}/ with stable content
             def stable_path = getAllFilesFromDir(params.outdir, ignoreFile: 'tests/.nftignore')
             assertAll(
                 { assert workflow.success},
                 { assert snapshot(
-                    // Number of successful tasks
                     workflow.trace.succeeded().size(),
-                    // pipeline versions.yml file for multiqc from which Nextflow version is removed because we tests pipelines on multiple Nextflow versions
                     removeNextflowVersion("$outputDir/pipeline_info/nf_core_differentialabundance_software_versions.yml"),
-                    // All stable path name, with a relative path
                     stable_name,
-                    // All files with stable contents
                     stable_path
                 ).match() }
-                )
+            )
         }
     }
 }
