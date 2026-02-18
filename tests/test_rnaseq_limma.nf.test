@@ -5,14 +5,39 @@ nextflow_pipeline {
     tag "rnaseq_limma"
     tag "pipeline"
 
-    test("Test rnaseq limma profile - limma_rnaseq_gsea") {
+    test("Test rnaseq limma profile - rnaseq_limma_gsea") {
 
         when {
             params {
-                outdir        = "$outputDir"
-                paramsheet    = "${projectDir}/conf/test_paramsheet.yaml"
-                paramset_name = "limma_rnaseq_gsea"
+                outdir                     = "$outputDir"
+
+                // Study info
+                study_name                 = 'SRP254919'
+
+                // Input data
+                input                      = 'https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/mus_musculus/rnaseq_expression/SRP254919.samplesheet.csv'
+                matrix                     = 'https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/mus_musculus/rnaseq_expression/SRP254919.salmon.merged.gene_counts.top1000cov.tsv'
+                transcript_length_matrix   = 'https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/mus_musculus/rnaseq_expression/SRP254919.spoofed_lengths.tsv'
+                contrasts_yml              = 'https://raw.githubusercontent.com/nf-core/test-datasets/refs/heads/differentialabundance/testdata/SRP254919.contrasts.yaml'
+                gtf                        = 'https://ftp.ensembl.org/pub/release-81/gtf/mus_musculus/Mus_musculus.GRCm38.81.gtf.gz'
+                gene_sets_files            = 'https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/mus_musculus/gene_set_analysis/mh.all.v2022.1.Mm.symbols.gmt'
+
+                // Filtering
+                filtering_min_abundance    = 10
+
+                // Exploratory
+                exploratory_main_variable  = 'contrasts'
+
+                // GSEA
+                gsea_rnd_seed              = '10'
+
+                // Report options
+                report_contributors        = 'Jane Doe\nDirector of Institute of Microbiology\nUniversity of Smallville;John Smith\nPhD student\nInstitute of Microbiology\nUniversity of Smallville'
+
+                // Other
+                round_digits               = 3
             }
+            profile 'rnaseq_limma_gsea'
         }
 
         then {
@@ -36,14 +61,35 @@ nextflow_pipeline {
         }
     }
 
-    test("Test rnaseq limma profile - limma_rnaseq_gsea,limma_rnaseq_gprofiler2") {
+    test("Test rnaseq limma profile - rnaseq_limma_gprofiler2") {
 
         when {
             params {
-                outdir        = "$outputDir"
-                paramsheet    = "${projectDir}/conf/test_paramsheet.yaml"
-                paramset_name = "limma_rnaseq_gsea,limma_rnaseq_gprofiler2"
+                outdir                     = "$outputDir"
+
+                // Study info
+                study_name                 = 'SRP254919'
+
+                // Input data
+                input                      = 'https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/mus_musculus/rnaseq_expression/SRP254919.samplesheet.csv'
+                matrix                     = 'https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/mus_musculus/rnaseq_expression/SRP254919.salmon.merged.gene_counts.top1000cov.tsv'
+                transcript_length_matrix   = 'https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/mus_musculus/rnaseq_expression/SRP254919.spoofed_lengths.tsv'
+                contrasts_yml              = 'https://raw.githubusercontent.com/nf-core/test-datasets/refs/heads/differentialabundance/testdata/SRP254919.contrasts.yaml'
+                gtf                        = 'https://ftp.ensembl.org/pub/release-81/gtf/mus_musculus/Mus_musculus.GRCm38.81.gtf.gz'
+
+                // Filtering
+                filtering_min_abundance    = 10
+
+                // gprofiler2 options
+                gprofiler2_organism        = 'mmusculus'
+
+                // Report options
+                report_contributors        = 'Jane Doe\nDirector of Institute of Microbiology\nUniversity of Smallville;John Smith\nPhD student\nInstitute of Microbiology\nUniversity of Smallville'
+
+                // Other
+                round_digits               = 3
             }
+            profile 'rnaseq_limma_gprofiler2'
         }
 
         then {
@@ -67,15 +113,41 @@ nextflow_pipeline {
         }
     }
 
-    test("Test rnaseq limma profile - limma_rnaseq_gsea - with formula and complex contrasts") {
+    test("Test rnaseq limma profile - rnaseq_limma_gsea - with formula and complex contrasts") {
         tag "limma_rnaseq_gsea_complex"
 
         when {
             params {
-                outdir        = "$outputDir"
-                paramsheet    = "${projectDir}/conf/test_paramsheet.yaml"
-                paramset_name = "limma_rnaseq_gsea_complex"
+                outdir                     = "$outputDir"
+
+                // Study info
+                study_name                 = 'SRP254919'
+
+                // Input data (complex dataset)
+                input                      = 'https://github.com/nf-core/test-datasets/raw/differentialabundance/modules_testdata/variancepartition_dream/metadata.tsv'
+                matrix                     = 'https://github.com/nf-core/test-datasets/raw/differentialabundance/modules_testdata/variancepartition_dream/counts.tsv'
+                contrasts_yml              = 'https://github.com/nf-core/test-datasets/raw/differentialabundance/testdata/formula_contrasts/rnaseq_complex_contrast.yaml'
+                gtf                        = 'https://ftp.ensembl.org/pub/release-81/gtf/mus_musculus/Mus_musculus.GRCm38.81.gtf.gz'
+                gene_sets_files            = 'https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/mus_musculus/gene_set_analysis/mh.all.v2022.1.Mm.symbols.gmt'
+
+                // Filtering
+                filtering_min_abundance    = 10
+
+                // Exploratory
+                exploratory_main_variable  = 'contrasts'
+                exploratory_log2_assays    = 'raw'
+
+                // GSEA
+                gsea_rnd_seed              = '10'
+
+                // Report options
+                report_contributors        = 'Jane Doe\nDirector of Institute of Microbiology\nUniversity of Smallville;John Smith\nPhD student\nInstitute of Microbiology\nUniversity of Smallville'
+                report_grouping_variable   = 'treatment'
+
+                // Other
+                round_digits               = 3
             }
+            profile 'rnaseq_limma_gsea'
         }
 
         then {
@@ -99,15 +171,34 @@ nextflow_pipeline {
         }
     }
 
-    test("Test rnaseq limma profile - with decoupler") {
+    test("Test rnaseq limma profile - rnaseq_limma_decoupler") {
         tag "limma_rnaseq_decoupler"
 
         when {
             params {
-                outdir        = "$outputDir"
-                paramsheet    = "${projectDir}/conf/test_paramsheet.yaml"
-                paramset_name = "limma_rnaseq_decoupler"
+                outdir                     = "$outputDir"
+
+                // Study info
+                study_name                 = 'SRP254919'
+
+                // Input data
+                input                      = 'https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/mus_musculus/rnaseq_expression/SRP254919.samplesheet.csv'
+                matrix                     = 'https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/mus_musculus/rnaseq_expression/SRP254919.salmon.merged.gene_counts.top1000cov.tsv'
+                transcript_length_matrix   = 'https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/mus_musculus/rnaseq_expression/SRP254919.spoofed_lengths.tsv'
+                contrasts_yml              = 'https://raw.githubusercontent.com/nf-core/test-datasets/refs/heads/differentialabundance/testdata/SRP254919.contrasts.yaml'
+                gtf                        = 'https://ftp.ensembl.org/pub/release-81/gtf/mus_musculus/Mus_musculus.GRCm38.81.gtf.gz'
+                decoupler_network          = 'https://github.com/nf-core/test-datasets/raw/differentialabundance/modules_testdata/progeny/mouse_network.tsv'
+
+                // Filtering
+                filtering_min_abundance    = 10
+
+                // Report options
+                report_contributors        = 'Jane Doe\nDirector of Institute of Microbiology\nUniversity of Smallville;John Smith\nPhD student\nInstitute of Microbiology\nUniversity of Smallville'
+
+                // Other
+                round_digits               = 3
             }
+            profile 'rnaseq_limma_decoupler'
         }
 
         then {
@@ -131,13 +222,38 @@ nextflow_pipeline {
         }
     }
 
-    test("Test rnaseq limma profile - limma_rnaseq_gsea - Numeric sample IDs") {
+    test("Test rnaseq limma profile - rnaseq_limma_gsea - Numeric sample IDs") {
         when {
             params {
-                outdir        = "$outputDir"
-                paramsheet    = "${projectDir}/conf/test_paramsheet.yaml"
-                paramset_name = "limma_rnaseq_gsea_numeric_samples"
+                outdir                     = "$outputDir"
+
+                // Study info
+                study_name                 = 'SRP254919'
+
+                // Input data (local files with numeric sample IDs)
+                input                      = '${projectDir}/tests/assets/SRP254919.samplesheet.csv'
+                matrix                     = '${projectDir}/tests/assets/SRP254919.salmon.merged.gene_counts.top1000cov.tsv'
+                transcript_length_matrix   = '${projectDir}/tests/assets/SRP254919.spoofed_lengths.tsv'
+                contrasts_yml              = 'https://raw.githubusercontent.com/nf-core/test-datasets/refs/heads/differentialabundance/testdata/SRP254919.contrasts.yaml'
+                gtf                        = 'https://ftp.ensembl.org/pub/release-81/gtf/mus_musculus/Mus_musculus.GRCm38.81.gtf.gz'
+                gene_sets_files            = 'https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/mus_musculus/gene_set_analysis/mh.all.v2022.1.Mm.symbols.gmt'
+
+                // Filtering
+                filtering_min_abundance    = 10
+
+                // Exploratory
+                exploratory_main_variable  = 'contrasts'
+
+                // GSEA
+                gsea_rnd_seed              = '10'
+
+                // Report options
+                report_contributors        = 'Jane Doe\nDirector of Institute of Microbiology\nUniversity of Smallville;John Smith\nPhD student\nInstitute of Microbiology\nUniversity of Smallville'
+
+                // Other
+                round_digits               = 3
             }
+            profile 'rnaseq_limma_gsea'
         }
 
         then {

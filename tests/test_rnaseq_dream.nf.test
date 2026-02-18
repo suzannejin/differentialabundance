@@ -5,14 +5,37 @@ nextflow_pipeline {
     tag "rnaseq_dream"
     tag "pipeline"
 
-    test("Test rnaseq dream profile - dream_rnaseq") {
+    test("Test rnaseq dream profile - rnaseq_dream") {
 
         when {
             params {
-                outdir              = "$outputDir"
-                paramsheet          = "${projectDir}/conf/test_paramsheet.yaml"
-                paramset_name       = "dream_rnaseq"
+                outdir                     = "$outputDir"
+
+                // Study info
+                study_name                 = 'SRP254919'
+
+                // Input data (complex dataset)
+                input                      = 'https://github.com/nf-core/test-datasets/raw/differentialabundance/modules_testdata/variancepartition_dream/metadata.tsv'
+                matrix                     = 'https://github.com/nf-core/test-datasets/raw/differentialabundance/modules_testdata/variancepartition_dream/counts.tsv'
+                contrasts_yml              = 'https://github.com/nf-core/test-datasets/raw/differentialabundance/testdata/formula_contrasts/rnaseq_complex_contrast.yaml'
+                gtf                        = 'https://ftp.ensembl.org/pub/release-81/gtf/mus_musculus/Mus_musculus.GRCm38.81.gtf.gz'
+
+                // DREAM settings
+                dream_apply_voom           = true
+
+                // Filtering
+                filtering_min_abundance    = 10
+
+                // Exploratory
+                exploratory_main_variable  = 'contrasts'
+
+                // Report options
+                report_contributors        = 'Jane Doe\nDirector of Institute of Microbiology\nUniversity of Smallville;John Smith\nPhD student\nInstitute of Microbiology\nUniversity of Smallville'
+
+                // Other
+                round_digits               = 3
             }
+            profile 'rnaseq_dream'
         }
 
         then {
@@ -39,10 +62,38 @@ nextflow_pipeline {
     test("Test rnaseq dream profile - complex contrast - with zero intercept") {
         when {
             params {
-                outdir              = "$outputDir"
-                paramsheet          = "${projectDir}/conf/test_paramsheet.yaml"
-                paramset_name       = "dream_norm"
+                outdir                     = "$outputDir"
+
+                // Study info
+                study_name                 = 'SRP254919'
+
+                // Input data (complex dataset with zero intercept contrasts)
+                input                      = 'https://github.com/nf-core/test-datasets/raw/differentialabundance/modules_testdata/variancepartition_dream/metadata.tsv'
+                matrix                     = 'https://github.com/nf-core/test-datasets/raw/differentialabundance/modules_testdata/variancepartition_dream/counts.tsv'
+                contrasts_yml              = '${projectDir}/tests/assets/zero_intercept_contrasts.yml'
+                gtf                        = 'https://ftp.ensembl.org/pub/release-81/gtf/mus_musculus/Mus_musculus.GRCm38.81.gtf.gz'
+
+                // DREAM settings - override for dream_norm
+                dream_apply_voom           = false
+
+                // Exploratory settings for dream_norm (no voom)
+                exploratory_assay_names    = 'raw'
+                exploratory_final_assay    = 'raw'
+                exploratory_log2_assays    = 'raw'
+
+                // Filtering
+                filtering_min_abundance    = 10
+
+                // Exploratory
+                exploratory_main_variable  = 'contrasts'
+
+                // Report options
+                report_contributors        = 'Jane Doe\nDirector of Institute of Microbiology\nUniversity of Smallville;John Smith\nPhD student\nInstitute of Microbiology\nUniversity of Smallville'
+
+                // Other
+                round_digits               = 3
             }
+            profile 'rnaseq_dream'
         }
 
         then {
@@ -66,14 +117,35 @@ nextflow_pipeline {
         }
     }
 
-    test("Test rnaseq dream profile - with decoupler") {
+    test("Test rnaseq dream profile - rnaseq_dream_decoupler") {
 
         when {
             params {
-                outdir              = "$outputDir"
-                paramsheet          = "${projectDir}/conf/test_paramsheet.yaml"
-                paramset_name       = "dream_rnaseq_decoupler"
+                outdir                     = "$outputDir"
+
+                // Study info
+                study_name                 = 'SRP254919'
+
+                // Input data (complex dataset)
+                input                      = 'https://github.com/nf-core/test-datasets/raw/differentialabundance/modules_testdata/variancepartition_dream/metadata.tsv'
+                matrix                     = 'https://github.com/nf-core/test-datasets/raw/differentialabundance/modules_testdata/variancepartition_dream/counts.tsv'
+                contrasts_yml              = 'https://github.com/nf-core/test-datasets/raw/differentialabundance/testdata/formula_contrasts/rnaseq_complex_contrast.yaml'
+                gtf                        = 'https://ftp.ensembl.org/pub/release-81/gtf/mus_musculus/Mus_musculus.GRCm38.81.gtf.gz'
+                decoupler_network          = 'https://github.com/nf-core/test-datasets/raw/differentialabundance/modules_testdata/progeny/mouse_network.tsv'
+
+                // Filtering
+                filtering_min_abundance    = 10
+
+                // Functional analysis with decoupler
+                decoupler_min_n            = 1
+
+                // Report options
+                report_contributors        = 'Jane Doe\nDirector of Institute of Microbiology\nUniversity of Smallville;John Smith\nPhD student\nInstitute of Microbiology\nUniversity of Smallville'
+
+                // Other
+                round_digits               = 3
             }
+            profile 'rnaseq_dream_decoupler'
         }
 
         then {
@@ -97,13 +169,34 @@ nextflow_pipeline {
         }
     }
 
-    test("Test - Numeric sample IDs - rnaseq dream profile - with decoupler") {
+    test("Test - Numeric sample IDs - rnaseq_dream_decoupler") {
         when {
             params {
-                outdir              = "$outputDir"
-                paramsheet          = "${projectDir}/conf/test_paramsheet.yaml"
-                paramset_name       = "dream_rnaseq_decoupler_numeric_samples"
+                outdir                     = "$outputDir"
+
+                // Study info
+                study_name                 = 'SRP254919'
+
+                // Input data (local files with numeric sample IDs)
+                input                      = '${projectDir}/tests/assets/SRP254919.samplesheet.csv'
+                matrix                     = '${projectDir}/tests/assets/SRP254919.salmon.merged.gene_counts.top1000cov.tsv'
+                contrasts_yml              = '${projectDir}/tests/assets/SRP254919_dream.contrasts.yaml'
+                gtf                        = 'https://ftp.ensembl.org/pub/release-81/gtf/mus_musculus/Mus_musculus.GRCm38.81.gtf.gz'
+                decoupler_network          = 'https://github.com/nf-core/test-datasets/raw/differentialabundance/modules_testdata/progeny/mouse_network.tsv'
+
+                // Filtering
+                filtering_min_abundance    = 10
+
+                // Functional analysis with decoupler
+                decoupler_min_n            = 1
+
+                // Report options
+                report_contributors        = 'Jane Doe\nDirector of Institute of Microbiology\nUniversity of Smallville;John Smith\nPhD student\nInstitute of Microbiology\nUniversity of Smallville'
+
+                // Other
+                round_digits               = 3
             }
+            profile 'rnaseq_dream_decoupler'
         }
 
         then {
